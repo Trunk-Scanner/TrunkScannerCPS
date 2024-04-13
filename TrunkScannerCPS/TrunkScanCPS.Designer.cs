@@ -68,6 +68,8 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.cmbControlHead = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -357,6 +359,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label11);
+            this.groupBox2.Controls.Add(this.cmbControlHead);
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.cmbTtsEnabled);
             this.groupBox2.Location = new System.Drawing.Point(391, 175);
@@ -460,6 +464,23 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Zone";
             // 
+            // cmbControlHead
+            // 
+            this.cmbControlHead.FormattingEnabled = true;
+            this.cmbControlHead.Location = new System.Drawing.Point(79, 48);
+            this.cmbControlHead.Name = "cmbControlHead";
+            this.cmbControlHead.Size = new System.Drawing.Size(121, 21);
+            this.cmbControlHead.TabIndex = 2;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(15, 52);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(52, 13);
+            this.label11.TabIndex = 3;
+            this.label11.Text = "CH Type:";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -531,6 +552,8 @@
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox cmbControlHead;
     }
 }
 

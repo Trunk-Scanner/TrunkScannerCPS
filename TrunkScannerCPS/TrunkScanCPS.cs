@@ -13,7 +13,7 @@ namespace TrunkScannerCPS
     {
         private Codeplug currentCodeplug;
         private static string appVersion = "R01.02.00";
-        private AppType currentAppType = AppType.CPS;
+        private AppType currentAppType = AppType.Labtool;
 
         public Form1()
         {
@@ -21,6 +21,7 @@ namespace TrunkScannerCPS
             this.Text = $"TrunkScan {currentAppType.Name}. Version: {appVersion}";
             AdjustFieldEditability();
         }
+
 
         private void AdjustFieldEditability()
         {
@@ -113,6 +114,7 @@ namespace TrunkScannerCPS
             scanListsParentNode.Expand();
 
             PopulateTtsEnableComboBox(currentCodeplug.TtsEnabled);
+            PopulateControlHeadComboBox();
 
             serialNumberBox.Text = currentCodeplug.SerialNumber;
             modelBox.Text = currentCodeplug.ModelNumber;
@@ -234,6 +236,25 @@ namespace TrunkScannerCPS
             cmbTtsEnabled.SelectedItem = enabled ? "True" : "False";
         }
 
+        private void PopulateControlHeadComboBox()
+        {
+            var values = Enum.GetValues(typeof(ControlHeadType));
+            var i = -1; // Probably a crappy way to do it, but meh
+
+            cmbControlHead.Items.Clear();
+            cmbControlHead.Items.Add("<None>");
+
+            foreach (var controlHead in values)
+            {
+                i++;
+                if (i == 0)
+                    continue;
+
+                cmbControlHead.Items.Add(controlHead);
+            }
+
+            cmbControlHead.SelectedIndex = currentCodeplug.ControlHead;
+        }
 
         private void btnDeleteChannel_Click(object sender, EventArgs e)
         {
@@ -428,6 +449,7 @@ namespace TrunkScannerCPS
             currentCodeplug.CodeplugVersion = appVersion;
             currentCodeplug.ModelNumber = modelBox.Text;
             currentCodeplug.CodeplugVersion = codeplugVersionBox.Text;
+            currentCodeplug.ControlHead = cmbControlHead.SelectedIndex;
 
             if (cmbTtsEnabled.SelectedItem.ToString() == "True")
             {

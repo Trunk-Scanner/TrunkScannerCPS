@@ -10,6 +10,7 @@ namespace TrunkScannerCPS
     {
         public List<Zone> Zones { get; set; } = new List<Zone>();
         public List<ScanList> ScanLists { get; set; } = new List<ScanList>();
+        public int ControlHead { get; set; }
         public string ModelNumber { get; set; }
         public string SerialNumber { get; set; }
         public string CodeplugVersion {  get; set; }
@@ -84,5 +85,13 @@ namespace TrunkScannerCPS
         Depot,
         Labtool,
         PhpSplutions
+    }
+
+    public enum ControlHeadType
+    {
+        None,
+        O2,
+        E5,
+        O9
     }
 }
