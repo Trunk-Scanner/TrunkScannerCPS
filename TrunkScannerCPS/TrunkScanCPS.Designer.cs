@@ -73,6 +73,10 @@
             this.cmbRadioMode = new System.Windows.Forms.ComboBox();
             this.label12 = new System.Windows.Forms.Label();
             this.chkSecondaryRadioTx = new System.Windows.Forms.CheckBox();
+            this.cmbChannelMode = new System.Windows.Forms.ComboBox();
+            this.txtChannelFrequncy = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -100,21 +104,21 @@
             // 
             // txtChannelName
             // 
-            this.txtChannelName.Location = new System.Drawing.Point(63, 18);
+            this.txtChannelName.Location = new System.Drawing.Point(120, 14);
             this.txtChannelName.Name = "txtChannelName";
             this.txtChannelName.Size = new System.Drawing.Size(117, 20);
             this.txtChannelName.TabIndex = 2;
             // 
             // txtTgid
             // 
-            this.txtTgid.Location = new System.Drawing.Point(63, 40);
+            this.txtTgid.Location = new System.Drawing.Point(120, 36);
             this.txtTgid.Name = "txtTgid";
             this.txtTgid.Size = new System.Drawing.Size(117, 20);
             this.txtTgid.TabIndex = 3;
             // 
             // btnAddChannel
             // 
-            this.btnAddChannel.Location = new System.Drawing.Point(28, 98);
+            this.btnAddChannel.Location = new System.Drawing.Point(28, 159);
             this.btnAddChannel.Name = "btnAddChannel";
             this.btnAddChannel.Size = new System.Drawing.Size(152, 23);
             this.btnAddChannel.TabIndex = 4;
@@ -124,7 +128,7 @@
             // 
             // btnDeleteChannel
             // 
-            this.btnDeleteChannel.Location = new System.Drawing.Point(28, 127);
+            this.btnDeleteChannel.Location = new System.Drawing.Point(28, 188);
             this.btnDeleteChannel.Name = "btnDeleteChannel";
             this.btnDeleteChannel.Size = new System.Drawing.Size(152, 23);
             this.btnDeleteChannel.TabIndex = 5;
@@ -134,7 +138,7 @@
             // 
             // btnSaveChannel
             // 
-            this.btnSaveChannel.Location = new System.Drawing.Point(28, 69);
+            this.btnSaveChannel.Location = new System.Drawing.Point(28, 130);
             this.btnSaveChannel.Name = "btnSaveChannel";
             this.btnSaveChannel.Size = new System.Drawing.Size(152, 23);
             this.btnSaveChannel.TabIndex = 6;
@@ -192,7 +196,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 21);
+            this.label1.Location = new System.Drawing.Point(71, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 13);
             this.label1.TabIndex = 12;
@@ -201,7 +205,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 43);
+            this.label2.Location = new System.Drawing.Point(73, 45);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(36, 13);
             this.label2.TabIndex = 13;
@@ -226,9 +230,9 @@
             this.groupBox1.Controls.Add(this.modelBox);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.serialNumberBox);
-            this.groupBox1.Location = new System.Drawing.Point(597, 175);
+            this.groupBox1.Location = new System.Drawing.Point(597, 237);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 263);
+            this.groupBox1.Size = new System.Drawing.Size(200, 201);
             this.groupBox1.TabIndex = 15;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Info";
@@ -369,9 +373,9 @@
             this.groupBox2.Controls.Add(this.cmbControlHead);
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.cmbTtsEnabled);
-            this.groupBox2.Location = new System.Drawing.Point(391, 175);
+            this.groupBox2.Location = new System.Drawing.Point(391, 237);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 263);
+            this.groupBox2.Size = new System.Drawing.Size(200, 201);
             this.groupBox2.TabIndex = 23;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Settings";
@@ -440,6 +444,10 @@
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.label14);
+            this.groupBox4.Controls.Add(this.label13);
+            this.groupBox4.Controls.Add(this.txtChannelFrequncy);
+            this.groupBox4.Controls.Add(this.cmbChannelMode);
             this.groupBox4.Controls.Add(this.txtChannelName);
             this.groupBox4.Controls.Add(this.label1);
             this.groupBox4.Controls.Add(this.label2);
@@ -449,7 +457,7 @@
             this.groupBox4.Controls.Add(this.btnAddChannel);
             this.groupBox4.Location = new System.Drawing.Point(405, 12);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(195, 157);
+            this.groupBox4.Size = new System.Drawing.Size(243, 219);
             this.groupBox4.TabIndex = 28;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Channel";
@@ -515,6 +523,40 @@
             this.chkSecondaryRadioTx.Text = "Secondary Radio TX";
             this.chkSecondaryRadioTx.UseVisualStyleBackColor = true;
             this.chkSecondaryRadioTx.CheckedChanged += new System.EventHandler(this.chkSecondaryRadioTx_CheckedChanged);
+            // 
+            // cmbChannelMode
+            // 
+            this.cmbChannelMode.FormattingEnabled = true;
+            this.cmbChannelMode.Location = new System.Drawing.Point(120, 88);
+            this.cmbChannelMode.Name = "cmbChannelMode";
+            this.cmbChannelMode.Size = new System.Drawing.Size(117, 21);
+            this.cmbChannelMode.TabIndex = 14;
+            this.cmbChannelMode.SelectedIndexChanged += new System.EventHandler(this.cmbChannelMode_SelectedIndexChanged);
+            // 
+            // txtChannelFrequncy
+            // 
+            this.txtChannelFrequncy.Location = new System.Drawing.Point(120, 62);
+            this.txtChannelFrequncy.Name = "txtChannelFrequncy";
+            this.txtChannelFrequncy.Size = new System.Drawing.Size(117, 20);
+            this.txtChannelFrequncy.TabIndex = 15;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(25, 65);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(85, 13);
+            this.label13.TabIndex = 16;
+            this.label13.Text = "Frequncy (MhZ):";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(73, 91);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(37, 13);
+            this.label14.TabIndex = 17;
+            this.label14.Text = "Mode:";
             // 
             // Form1
             // 
@@ -592,6 +634,10 @@
         private System.Windows.Forms.ComboBox cmbRadioMode;
         private System.Windows.Forms.CheckBox chkSecondaryRadioTx;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox txtChannelFrequncy;
+        private System.Windows.Forms.ComboBox cmbChannelMode;
     }
 }
 

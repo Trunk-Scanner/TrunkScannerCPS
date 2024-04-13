@@ -12,7 +12,7 @@ namespace TrunkScannerCPS
     public partial class Form1 : Form
     {
         private Codeplug currentCodeplug;
-        private static string appVersion = "R01.05.00";
+        private static string appVersion = "R01.06.00";
         private AppType currentAppType = AppType.Labtool;
 
         public Form1()
@@ -90,7 +90,8 @@ namespace TrunkScannerCPS
                 TreeNode zoneNode = new TreeNode(zone.Name);
                 foreach (var channel in zone.Channels)
                 {
-                    zoneNode.Nodes.Add(new TreeNode($"{channel.Alias} ({channel.Tgid})"));
+                    var text = !string.IsNullOrEmpty(channel.Tgid) ? channel.Tgid : FormatFrequency(channel.Frequency);
+                    zoneNode.Nodes.Add(new TreeNode($"{channel.Alias} ({text})"));
                 }
                 zonesParentNode.Nodes.Add(zoneNode);
             }
@@ -165,6 +166,7 @@ namespace TrunkScannerCPS
             txtZoneName.Clear();
             txtChannelName.Clear();
             txtTgid.Clear();
+            txtChannelFrequncy.Clear();
             txtScanListName.Clear();
 
             if (e.Node.Level == 1 && e.Node.Parent != null && e.Node.Parent.Text == "Zones")
@@ -183,7 +185,24 @@ namespace TrunkScannerCPS
                 if (parts.Length > 1)
                 {
                     txtChannelName.Text = parts[0];
-                    txtTgid.Text = parts[1].TrimEnd(')');
+                    string identifier = parts[1].TrimEnd(')');
+
+                    Channel selectedChannel = currentCodeplug.Zones
+                        .SelectMany(z => z.Channels)
+                        .FirstOrDefault(c => c.Alias == txtChannelName.Text &&
+                            (c.Tgid == identifier || FormatFrequency(c.Frequency) == identifier));
+
+                    if (selectedChannel != null)
+                    {
+                        txtTgid.Text = selectedChannel.Tgid;
+                        txtChannelFrequncy.Text = FormatFrequency(selectedChannel.Frequency);
+                        PopulateChannelModeComboBox(selectedChannel);
+                        cmbChannelMode.Enabled = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Channel details could not be found.", "Error");
+                    }
                 }
             }
             else if (e.Node.Level == 1 && e.Node.Parent != null && e.Node.Parent.Text == "Scan Lists")
@@ -207,7 +226,13 @@ namespace TrunkScannerCPS
             {
                 if (!existingTgids.Contains(channel.Tgid))
                 {
-                    cmbChannels.Items.Add($"{channel.Alias} ({channel.Tgid})");
+                    var text = String.Empty;
+                    if (!string.IsNullOrEmpty(channel.Tgid))
+                        text = channel.Tgid;
+                    else
+                        text = FormatFrequency(channel.Frequency);
+
+                    cmbChannels.Items.Add($"{channel.Alias} ({text})");
                 }
             }
 
@@ -280,6 +305,18 @@ namespace TrunkScannerCPS
             cmbRadioMode.SelectedIndex = currentCodeplug.RadioMode;
         }
 
+        private void PopulateChannelModeComboBox(Channel selectedChannel)
+        {
+            cmbChannelMode.Items.Clear();
+            foreach (ChannelMode mode in Enum.GetValues(typeof(ChannelMode)))
+            {
+                cmbChannelMode.Items.Add(mode);
+            }
+            cmbChannelMode.SelectedItem = selectedChannel.Mode;
+
+            PopulateMode(selectedChannel);
+        }
+
         private void btnDeleteChannel_Click(object sender, EventArgs e)
         {
             if (treeView1.SelectedNode != null && treeView1.SelectedNode.Level == 2)
@@ -337,6 +374,12 @@ namespace TrunkScannerCPS
                 }
             }
         }
+
+        private string GetChannelDisplayText(Channel channel)
+        {
+            return !string.IsNullOrEmpty(channel.Tgid) ? $"{channel.Alias} ({channel.Tgid})" : $"{channel.Alias} ({FormatFrequency(channel.Frequency)})";
+        }
+
         private void btnSaveChannel_Click(object sender, EventArgs e)
         {
             if (treeView1.SelectedNode != null && treeView1.SelectedNode.Level == 2)
@@ -347,13 +390,17 @@ namespace TrunkScannerCPS
                 var selectedZone = currentCodeplug.Zones.FirstOrDefault(z => z.Name == selectedZoneNode.Text);
                 if (selectedZone != null)
                 {
-                    var channelToSave = selectedZone.Channels.FirstOrDefault(c => $"{c.Alias} ({c.Tgid})" == selectedChannelNode.Text);
+                    var channelToSave = selectedZone.Channels.FirstOrDefault(c => GetChannelDisplayText(c) == selectedChannelNode.Text);
                     if (channelToSave != null)
                     {
+                        var newText = !string.IsNullOrEmpty(txtTgid.Text) ? txtTgid.Text : txtChannelFrequncy.Text;
+
                         channelToSave.Alias = txtChannelName.Text;
                         channelToSave.Tgid = txtTgid.Text;
+                        channelToSave.Frequency = ParseFrequency(txtChannelFrequncy.Text);
+                        channelToSave.Mode = (ChannelMode)cmbChannelMode.SelectedIndex;
 
-                        selectedChannelNode.Text = $"{channelToSave.Alias} ({channelToSave.Tgid})";
+                        selectedChannelNode.Text = GetChannelDisplayText(channelToSave);
                     }
                     else
                     {
@@ -638,6 +685,80 @@ namespace TrunkScannerCPS
         private void chkSecondaryRadioTx_CheckedChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void PopulateMode(Channel selectedChannel)
+        {
+            if (selectedChannel == null)
+            {
+                // TODO: Weird and off that this is null when switching between channels with different modes. Just returning seems to work but this seems like a possibly bigger issue
+                //MessageBox.Show("selectedChannel was null BUGBUG");
+                return;
+            }
+
+            if (selectedChannel.Mode == ChannelMode.P25Conventional || selectedChannel.Mode == ChannelMode.AnalogConventional)
+            {
+                txtChannelFrequncy.Text = FormatFrequency(selectedChannel.Frequency);
+                txtTgid.Text = string.Empty;
+                txtChannelFrequncy.Enabled = true;
+                txtTgid.Enabled = false;
+            }
+            else
+            {
+                txtChannelFrequncy.Text = string.Empty;
+                txtTgid.Text = selectedChannel.Tgid;
+                txtChannelFrequncy.Enabled = false;
+                txtTgid.Enabled = true;
+            }
+        }
+
+        private void cmbChannelMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (treeView1.SelectedNode != null && treeView1.SelectedNode.Level == 2)
+            {
+                var selectedChannel = currentCodeplug.Zones
+                    .SelectMany(z => z.Channels)
+                    .FirstOrDefault(c => $"{c.Alias} ({c.Tgid})" == treeView1.SelectedNode.Text);
+
+                if (selectedChannel != null)
+                {
+                    selectedChannel.Mode = (ChannelMode)cmbChannelMode.SelectedItem;
+                }
+
+                PopulateMode(selectedChannel);
+            }
+        }
+
+        private string FormatFrequency(string frequencyHz)
+        {
+            if (long.TryParse(frequencyHz, out long freq))
+            {
+                return (freq / 1000000.0).ToString("N3").Replace(",", "");
+            }
+            return string.Empty;
+        }
+
+        private string ParseFrequency(string frequencyMHz)
+        {
+            string cleanInput = new string(frequencyMHz.Where(c => char.IsDigit(c) || c == '.').ToArray());
+
+            var parts = cleanInput.Split('.');
+            string normalizedInput;
+            if (parts.Length > 1)
+            {
+                normalizedInput = parts[0] + "." + string.Join("", parts.Skip(1));
+            }
+            else
+            {
+                normalizedInput = parts[0];
+            }
+
+            if (double.TryParse(normalizedInput, out double freq))
+            {
+                long freqInHz = (long)(freq * 1000000);
+                return freqInHz.ToString("D9");
+            }
+            return string.Empty;
         }
     }
 }

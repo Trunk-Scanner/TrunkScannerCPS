@@ -67,6 +67,8 @@ namespace TrunkScannerCPS
     {
         public string Alias { get; set; }
         public string Tgid { get; set; }
+        public string Frequency { get; set; }
+        public ChannelMode Mode { get; set; }
     }
 
     public class ScanList
@@ -79,6 +81,16 @@ namespace TrunkScannerCPS
     {
         public string Alias { get; set; }
         public string Tgid { get; set; }
+        public string Frequency { get; set; }
+        public ChannelMode Mode { get; set; }
+    }
+
+    public enum ChannelMode
+    {
+        P25Trunking,
+        P25Conventional,
+        AnalogConventional,
+        LTR
     }
 
     public enum CodeplugSource
