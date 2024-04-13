@@ -22,7 +22,6 @@ namespace TrunkScannerCPS
             AdjustFieldEditability();
         }
 
-
         private void AdjustFieldEditability()
         {
             bool isSerialNumberEnabled = false;
@@ -592,12 +591,20 @@ namespace TrunkScannerCPS
                 string selectedItem = cmbChannels.SelectedItem.ToString();
                 var parts = selectedItem.Split(new string[] { " (" }, StringSplitOptions.None);
                 string alias = parts[0];
-                string tgid = parts[1].TrimEnd(')');
+                string identifier = parts[1].TrimEnd(')');
 
-                ScanListItem newItem = new ScanListItem { Alias = alias, Tgid = tgid };
+                bool isFrequency = identifier.All(char.IsDigit) && identifier.Length > 5;
+
+                ScanListItem newItem = new ScanListItem
+                {
+                    Alias = alias,
+                    Tgid = isFrequency ? "" : identifier,
+                    Frequency = isFrequency ? ParseFrequency(identifier) : ""
+                };
+
                 scanList.Items.Add(newItem);
 
-                TreeNode newNode = new TreeNode($"{newItem.Alias} ({newItem.Tgid})");
+                TreeNode newNode = new TreeNode($"{newItem.Alias} ({(isFrequency ? FormatFrequency(newItem.Frequency) : newItem.Tgid)})");
                 treeView1.SelectedNode.Nodes.Add(newNode);
 
                 PopulateChannelsComboBox(currentCodeplug.Zones.SelectMany(z => z.Channels).ToList(), scanList);
@@ -613,7 +620,22 @@ namespace TrunkScannerCPS
         {
             if (treeView1.SelectedNode?.Parent?.Tag is ScanList scanList)
             {
-                var selectedItem = scanList.Items.FirstOrDefault(i => i.Alias == txtChannelName.Text && i.Tgid == txtTgid.Text);
+                string fullText = treeView1.SelectedNode.Text;
+                int startIndex = fullText.IndexOf('(') + 1;
+                int endIndex = fullText.IndexOf(')');
+                if (startIndex < 0 || endIndex < 0 || endIndex <= startIndex)
+                {
+                    MessageBox.Show("Failed to parse the channel information.", "Error");
+                    return;
+                }
+
+                string identifier = fullText.Substring(startIndex, endIndex - startIndex).Trim();
+
+                bool isFrequency = identifier.All(char.IsDigit) && identifier.Length > 5;
+
+                var selectedItem = scanList.Items.FirstOrDefault(i =>
+                    (isFrequency ? FormatFrequency(i.Frequency) == identifier : i.Tgid == identifier) && i.Alias == fullText.Substring(0, startIndex - 2).Trim());
+
                 if (selectedItem != null)
                 {
                     scanList.Items.Remove(selectedItem);
