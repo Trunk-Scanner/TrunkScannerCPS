@@ -70,6 +70,9 @@
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.cmbControlHead = new System.Windows.Forms.ComboBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.cmbRadioMode = new System.Windows.Forms.ComboBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.chkSecondaryRadioTx = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -359,6 +362,9 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.chkSecondaryRadioTx);
+            this.groupBox2.Controls.Add(this.label12);
+            this.groupBox2.Controls.Add(this.cmbRadioMode);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.cmbControlHead);
             this.groupBox2.Controls.Add(this.label10);
@@ -481,6 +487,35 @@
             this.label11.TabIndex = 3;
             this.label11.Text = "CH Type:";
             // 
+            // cmbRadioMode
+            // 
+            this.cmbRadioMode.FormattingEnabled = true;
+            this.cmbRadioMode.Location = new System.Drawing.Point(79, 75);
+            this.cmbRadioMode.Name = "cmbRadioMode";
+            this.cmbRadioMode.Size = new System.Drawing.Size(121, 21);
+            this.cmbRadioMode.TabIndex = 4;
+            this.cmbRadioMode.SelectedIndexChanged += new System.EventHandler(this.cmbRadioMode_SelectedIndexChanged);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(28, 78);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(37, 13);
+            this.label12.TabIndex = 5;
+            this.label12.Text = "Mode:";
+            // 
+            // chkSecondaryRadioTx
+            // 
+            this.chkSecondaryRadioTx.AutoSize = true;
+            this.chkSecondaryRadioTx.Location = new System.Drawing.Point(69, 102);
+            this.chkSecondaryRadioTx.Name = "chkSecondaryRadioTx";
+            this.chkSecondaryRadioTx.Size = new System.Drawing.Size(125, 17);
+            this.chkSecondaryRadioTx.TabIndex = 6;
+            this.chkSecondaryRadioTx.Text = "Secondary Radio TX";
+            this.chkSecondaryRadioTx.UseVisualStyleBackColor = true;
+            this.chkSecondaryRadioTx.CheckedChanged += new System.EventHandler(this.chkSecondaryRadioTx_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -554,6 +589,9 @@
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox cmbControlHead;
+        private System.Windows.Forms.ComboBox cmbRadioMode;
+        private System.Windows.Forms.CheckBox chkSecondaryRadioTx;
+        private System.Windows.Forms.Label label12;
     }
 }
 

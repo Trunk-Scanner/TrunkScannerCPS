@@ -12,7 +12,7 @@ namespace TrunkScannerCPS
     public partial class Form1 : Form
     {
         private Codeplug currentCodeplug;
-        private static string appVersion = "R01.04.00";
+        private static string appVersion = "R01.05.00";
         private AppType currentAppType = AppType.Labtool;
 
         public Form1()
@@ -115,10 +115,21 @@ namespace TrunkScannerCPS
 
             PopulateTtsEnableComboBox(currentCodeplug.TtsEnabled);
             PopulateControlHeadComboBox();
+            PopulateRadioModeComboBox();
 
             serialNumberBox.Text = currentCodeplug.SerialNumber;
             modelBox.Text = currentCodeplug.ModelNumber;
             codeplugVersionBox.Text = currentCodeplug.CodeplugVersion;
+            chkSecondaryRadioTx.Checked = currentCodeplug.SecondaryRadioTx;
+
+            if (currentCodeplug.RadioMode == 1)
+            {
+                chkSecondaryRadioTx.Enabled = true;
+            }
+            else
+            {
+                chkSecondaryRadioTx.Enabled = false;
+            }
 
             CodeplugSource source = (CodeplugSource)currentCodeplug.LastProgramSource;
 
@@ -254,6 +265,19 @@ namespace TrunkScannerCPS
             }
 
             cmbControlHead.SelectedIndex = currentCodeplug.ControlHead;
+        }
+
+        private void PopulateRadioModeComboBox()
+        {
+            var values = Enum.GetValues(typeof(RadioMode));
+            cmbRadioMode.Items.Clear();
+
+            foreach (var mode in values)
+            {
+                cmbRadioMode.Items.Add(mode);
+            }
+
+            cmbRadioMode.SelectedIndex = currentCodeplug.RadioMode;
         }
 
         private void btnDeleteChannel_Click(object sender, EventArgs e)
@@ -450,6 +474,7 @@ namespace TrunkScannerCPS
             currentCodeplug.ModelNumber = modelBox.Text;
             currentCodeplug.CodeplugVersion = codeplugVersionBox.Text;
             currentCodeplug.ControlHead = cmbControlHead.SelectedIndex;
+            currentCodeplug.RadioMode = cmbRadioMode.SelectedIndex;
 
             if (cmbTtsEnabled.SelectedItem.ToString() == "True")
             {
@@ -596,5 +621,23 @@ namespace TrunkScannerCPS
             }
         }
 
+        private void cmbRadioMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            chkSecondaryRadioTx.Checked = currentCodeplug.SecondaryRadioTx;
+            currentCodeplug.RadioMode = cmbRadioMode.SelectedIndex;
+
+            if (currentCodeplug.RadioMode == 1)
+            {
+                chkSecondaryRadioTx.Enabled = true;
+            } else
+            {
+                chkSecondaryRadioTx.Enabled = false;
+            }
+        }
+
+        private void chkSecondaryRadioTx_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
