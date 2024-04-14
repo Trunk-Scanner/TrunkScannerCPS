@@ -12,8 +12,9 @@ namespace TrunkScannerCPS
     public partial class Form1 : Form
     {
         private Codeplug currentCodeplug;
-        private static string appVersion = "R01.06.00";
-        private AppType currentAppType = AppType.CPS;
+        private static string appVersion = "R01.12.00";
+        private AppType currentAppType = AppType.Labtool;
+        private bool isSysKeyPresent = false;
 
         public Form1()
         {
@@ -28,6 +29,7 @@ namespace TrunkScannerCPS
             bool isModelEnabled = false;
             bool isCodeplugVersionEnabled = false;
             bool isLastProgramSrcEnabled = false;
+            bool isBornSysIDEnabled = false;
 
             switch (currentAppType.Name)
             {
@@ -39,6 +41,7 @@ namespace TrunkScannerCPS
                     MessageBox.Show("Depot Mode enabled!");
                     isSerialNumberEnabled = true;
                     isModelEnabled = true;
+                    isBornSysIDEnabled = true;
                     break;
                 case "Labtool":
                 case "PhpSplutions":
@@ -48,6 +51,7 @@ namespace TrunkScannerCPS
                     isModelEnabled = true;
                     isCodeplugVersionEnabled = true;
                     isLastProgramSrcEnabled = true;
+                    isBornSysIDEnabled = true;
                     break;
             }
 
@@ -55,11 +59,32 @@ namespace TrunkScannerCPS
             modelBox.Enabled = isModelEnabled;
             codeplugVersionBox.Enabled = isCodeplugVersionEnabled;
             lastProgramSrcBox.Enabled = isLastProgramSrcEnabled;
+            txtBornSysID.Enabled = isBornSysIDEnabled;
         }
 
         private void LoadCodeplug(string json)
         {
+            string oldSysId = string.Empty;
+
+            if (currentCodeplug != null)
+            {
+                oldSysId = currentCodeplug.HomeSystemId;
+            }
+
             currentCodeplug = JsonConvert.DeserializeObject<Codeplug>(json);
+
+            if (!string.IsNullOrEmpty(oldSysId))
+            {
+                if (oldSysId != currentCodeplug.HomeSystemId)
+                {
+                    isSysKeyPresent = false;
+                    UpdateSysKeyView();
+                    MessageBox.Show("Load the valid sys key for this system!");
+                }
+            }
+
+            if (currentCodeplug == null)
+                return;
 
             if (!currentCodeplug.IsValid())
             {
@@ -121,15 +146,23 @@ namespace TrunkScannerCPS
             modelBox.Text = currentCodeplug.ModelNumber;
             codeplugVersionBox.Text = currentCodeplug.CodeplugVersion;
             chkSecondaryRadioTx.Checked = currentCodeplug.SecondaryRadioTx;
+            chkEnforceSysID.Checked = currentCodeplug.EnforceSystemId;
+            chkRequireSysKey.Checked = currentCodeplug.RequireSysKey;
+            txtHomeSysID.Text = currentCodeplug.HomeSystemId;
+            txtPassword.Text = currentCodeplug.HashedPassword;
+            chkCpgPassword.Checked = currentCodeplug.IsPasswordProtected;
+
+            if (string.IsNullOrEmpty(currentCodeplug.BornSystemId))
+                currentCodeplug.BornSystemId = currentCodeplug.HomeSystemId;
+
+            txtBornSysID.Text = currentCodeplug.BornSystemId;
+
+            UpdateSysKeyView();
 
             if (currentCodeplug.RadioMode == 1)
-            {
                 chkSecondaryRadioTx.Enabled = true;
-            }
             else
-            {
                 chkSecondaryRadioTx.Enabled = false;
-            }
 
             CodeplugSource source = (CodeplugSource)currentCodeplug.LastProgramSource;
 
@@ -151,7 +184,25 @@ namespace TrunkScannerCPS
                 {
                     string fileContent = File.ReadAllText(openFileDialog.FileName);
 
-                    LoadCodeplug(fileContent);
+                    if (CheckIfProtected(fileContent))
+                    {
+                        using (PasswordForm passwordForm = new PasswordForm())
+                        {
+                            if (passwordForm.ShowDialog() == DialogResult.OK)
+                            {
+                                fileContent = CryptoUtils.DecryptString(fileContent, passwordForm.Password);
+                                LoadCodeplug(fileContent);
+                            }
+                            else
+                            {
+                                MessageBox.Show("Password is required to load this codeplug.", "Password Required", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        LoadCodeplug(fileContent);
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -159,6 +210,25 @@ namespace TrunkScannerCPS
                 }
             }
         }
+
+        private bool CheckIfProtected(string fileContent)
+        {
+            try
+            {
+                var jsonObject = Newtonsoft.Json.Linq.JToken.Parse(fileContent);
+                return false;
+            }
+            catch (Newtonsoft.Json.JsonReaderException)
+            {
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred: {ex.Message}", "Error Parsing JSON", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
 
         private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
         {
@@ -196,7 +266,8 @@ namespace TrunkScannerCPS
                         txtTgid.Text = selectedChannel.Tgid;
                         txtChannelFrequncy.Text = FormatFrequency(selectedChannel.Frequency);
                         PopulateChannelModeComboBox(selectedChannel);
-                        cmbChannelMode.Enabled = true;
+                        if (!requireSysKey())
+                            cmbChannelMode.Enabled = true;
                     }
                     else
                     {
@@ -521,6 +592,12 @@ namespace TrunkScannerCPS
             currentCodeplug.CodeplugVersion = codeplugVersionBox.Text;
             currentCodeplug.ControlHead = cmbControlHead.SelectedIndex;
             currentCodeplug.RadioMode = cmbRadioMode.SelectedIndex;
+            currentCodeplug.RequireSysKey = chkRequireSysKey.Checked;
+            currentCodeplug.EnforceSystemId = chkEnforceSysID.Checked;
+            currentCodeplug.HomeSystemId = txtHomeSysID.Text;
+            currentCodeplug.BornSystemId = txtBornSysID.Text;
+            currentCodeplug.HashedPassword = txtPassword.Text;
+            currentCodeplug.IsPasswordProtected = chkCpgPassword.Checked;
 
             if (cmbTtsEnabled.SelectedItem.ToString() == "True")
             {
@@ -549,8 +626,15 @@ namespace TrunkScannerCPS
 
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                var json = JsonConvert.SerializeObject(currentCodeplug, Formatting.Indented);
+                string json = JsonConvert.SerializeObject(currentCodeplug, Formatting.Indented);
+
+                if (currentCodeplug.IsPasswordProtected && !string.IsNullOrEmpty(txtPassword.Text))
+                {
+                    json = CryptoUtils.EncryptString(json, txtPassword.Text);
+                }
+
                 File.WriteAllText(saveFileDialog.FileName, json);
+
             }
         }
 
@@ -734,15 +818,19 @@ namespace TrunkScannerCPS
             {
                 txtChannelFrequncy.Text = FormatFrequency(selectedChannel.Frequency);
                 txtTgid.Text = string.Empty;
-                txtChannelFrequncy.Enabled = true;
                 txtTgid.Enabled = false;
+
+                if (!requireSysKey())
+                    txtChannelFrequncy.Enabled = true;
             }
             else
             {
                 txtChannelFrequncy.Text = string.Empty;
                 txtTgid.Text = selectedChannel.Tgid;
                 txtChannelFrequncy.Enabled = false;
-                txtTgid.Enabled = true;
+
+                if (!requireSysKey())
+                    txtTgid.Enabled = true;
             }
         }
 
@@ -793,6 +881,89 @@ namespace TrunkScannerCPS
                 return freqInHz.ToString("D9");
             }
             return string.Empty;
+        }
+
+        private bool requireSysKey()
+        {
+            bool result = true;
+            if (isSysKeyPresent || !currentCodeplug.RequireSysKey || currentAppType == AppType.Labtool || currentAppType == AppType.Depot)
+                result = false;
+            else if (currentCodeplug.RequireSysKey)
+                result = true;
+
+            return result;
+        }
+
+        private void UpdateSysKeyView()
+        {
+            if (!requireSysKey())
+            {
+                chkEnforceSysID.Enabled = true;
+                chkRequireSysKey.Enabled = true;
+                txtChannelName.Enabled = true;
+                txtChannelFrequncy.Enabled = true;
+                txtHomeSysID.Enabled = true;
+                txtTgid.Enabled = true;
+                cmbChannelMode.Enabled = true;
+                txtIsSyskeyPresent.Text = "True";
+            }
+            else
+            {
+                chkEnforceSysID.Enabled = false;
+                chkRequireSysKey.Enabled = false;
+                txtChannelName.Enabled = false;
+                txtChannelFrequncy.Enabled = false;
+                txtHomeSysID.Enabled = false;
+                txtTgid.Enabled = false;
+                cmbChannelMode.Enabled = false;
+                txtIsSyskeyPresent.Text = "False";
+            }
+        }
+
+        private void btnLoadSysKey_Click(object sender, EventArgs e)
+        {
+            if (currentCodeplug == null)
+                return;
+
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Title = "Open Sys Key File",
+                Filter = "Key Files|*.key|All Files|*.*",
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)
+            };
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    string sysId = currentCodeplug.HomeSystemId;
+                    SysKey sysKey = new SysKey(sysId);
+                    if (sysKey.ValidateKeyFile(openFileDialog.FileName))
+                    {
+                        isSysKeyPresent = true;
+                        UpdateSysKeyView();
+                        MessageBox.Show("SysKey is valid for this system ID.", "Validation Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        isSysKeyPresent = false;
+                        UpdateSysKeyView();
+                        MessageBox.Show("SysKey is not valid for this system ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    isSysKeyPresent = false;
+                    UpdateSysKeyView();
+                    Console.Write($"Error in syskey: {ex}");
+                    MessageBox.Show("SysKey is not valid for this system ID.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void chkCpgPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            currentCodeplug.IsPasswordProtected = chkCpgPassword.Checked;
         }
     }
 }

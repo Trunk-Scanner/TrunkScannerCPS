@@ -17,10 +17,16 @@ namespace TrunkScannerCPS
         public string SerialNumber { get; set; }
         public string CodeplugVersion {  get; set; }
         public string FlickerCode { get; set; }
+        public string HomeSystemId { get; set; }
+        public string BornSystemId { get; set; }
+        public string HashedPassword { get; set; }
+        public bool EnforceSystemId { get; set; }
+        public bool RequireSysKey { get; set; }
         public bool RadioKilled { get; set; }
         public bool TrunkingInhibited { get; set; }
         public bool TtsEnabled { get; set; }
         public bool SecondaryRadioTx { get; set; }
+        public bool IsPasswordProtected { get; set; }
 
         public bool IsValid()
         {

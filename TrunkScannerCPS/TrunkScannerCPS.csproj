@@ -51,6 +51,14 @@
   <ItemGroup>
     <Compile Include="AppType.cs" />
     <Compile Include="Codeplug.cs" />
+    <Compile Include="CryptoUtils.cs" />
+    <Compile Include="PasswordForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PasswordForm.Designer.cs">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SysKey.cs" />
     <Compile Include="TrunkScanCPS.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -59,6 +67,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="PasswordForm.resx">
+      <DependentUpon>PasswordForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TrunkScanCPS.resx">
       <DependentUpon>TrunkScanCPS.cs</DependentUpon>
     </EmbeddedResource>

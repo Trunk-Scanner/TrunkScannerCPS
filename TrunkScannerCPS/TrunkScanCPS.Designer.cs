@@ -60,23 +60,35 @@
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.cmbTtsEnabled = new System.Windows.Forms.ComboBox();
+            this.chkSecondaryRadioTx = new System.Windows.Forms.CheckBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.cmbRadioMode = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.cmbControlHead = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.cmbTtsEnabled = new System.Windows.Forms.ComboBox();
             this.cmbChannels = new System.Windows.Forms.ComboBox();
             this.btnAddScanList = new System.Windows.Forms.Button();
             this.btnDeleteScanList = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.cmbControlHead = new System.Windows.Forms.ComboBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.cmbRadioMode = new System.Windows.Forms.ComboBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.chkSecondaryRadioTx = new System.Windows.Forms.CheckBox();
-            this.cmbChannelMode = new System.Windows.Forms.ComboBox();
-            this.txtChannelFrequncy = new System.Windows.Forms.TextBox();
-            this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.txtChannelFrequncy = new System.Windows.Forms.TextBox();
+            this.cmbChannelMode = new System.Windows.Forms.ComboBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.btnLoadSysKey = new System.Windows.Forms.Button();
+            this.txtIsSyskeyPresent = new System.Windows.Forms.TextBox();
+            this.label15 = new System.Windows.Forms.Label();
+            this.chkRequireSysKey = new System.Windows.Forms.CheckBox();
+            this.txtHomeSysID = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.chkEnforceSysID = new System.Windows.Forms.CheckBox();
+            this.txtBornSysID = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.chkCpgPassword = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -222,6 +234,11 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.chkCpgPassword);
+            this.groupBox1.Controls.Add(this.label18);
+            this.groupBox1.Controls.Add(this.txtPassword);
+            this.groupBox1.Controls.Add(this.label17);
+            this.groupBox1.Controls.Add(this.txtBornSysID);
             this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.label5);
@@ -366,8 +383,12 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.chkEnforceSysID);
             this.groupBox2.Controls.Add(this.chkSecondaryRadioTx);
+            this.groupBox2.Controls.Add(this.label16);
             this.groupBox2.Controls.Add(this.label12);
+            this.groupBox2.Controls.Add(this.txtHomeSysID);
+            this.groupBox2.Controls.Add(this.chkRequireSysKey);
             this.groupBox2.Controls.Add(this.cmbRadioMode);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.cmbControlHead);
@@ -380,13 +401,51 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Settings";
             // 
-            // cmbTtsEnabled
+            // chkSecondaryRadioTx
             // 
-            this.cmbTtsEnabled.FormattingEnabled = true;
-            this.cmbTtsEnabled.Location = new System.Drawing.Point(79, 22);
-            this.cmbTtsEnabled.Name = "cmbTtsEnabled";
-            this.cmbTtsEnabled.Size = new System.Drawing.Size(121, 21);
-            this.cmbTtsEnabled.TabIndex = 0;
+            this.chkSecondaryRadioTx.AutoSize = true;
+            this.chkSecondaryRadioTx.Location = new System.Drawing.Point(75, 102);
+            this.chkSecondaryRadioTx.Name = "chkSecondaryRadioTx";
+            this.chkSecondaryRadioTx.Size = new System.Drawing.Size(125, 17);
+            this.chkSecondaryRadioTx.TabIndex = 6;
+            this.chkSecondaryRadioTx.Text = "Secondary Radio TX";
+            this.chkSecondaryRadioTx.UseVisualStyleBackColor = true;
+            this.chkSecondaryRadioTx.CheckedChanged += new System.EventHandler(this.chkSecondaryRadioTx_CheckedChanged);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(28, 78);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(37, 13);
+            this.label12.TabIndex = 5;
+            this.label12.Text = "Mode:";
+            // 
+            // cmbRadioMode
+            // 
+            this.cmbRadioMode.FormattingEnabled = true;
+            this.cmbRadioMode.Location = new System.Drawing.Point(79, 75);
+            this.cmbRadioMode.Name = "cmbRadioMode";
+            this.cmbRadioMode.Size = new System.Drawing.Size(121, 21);
+            this.cmbRadioMode.TabIndex = 4;
+            this.cmbRadioMode.SelectedIndexChanged += new System.EventHandler(this.cmbRadioMode_SelectedIndexChanged);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(15, 52);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(52, 13);
+            this.label11.TabIndex = 3;
+            this.label11.Text = "CH Type:";
+            // 
+            // cmbControlHead
+            // 
+            this.cmbControlHead.FormattingEnabled = true;
+            this.cmbControlHead.Location = new System.Drawing.Point(79, 48);
+            this.cmbControlHead.Name = "cmbControlHead";
+            this.cmbControlHead.Size = new System.Drawing.Size(121, 21);
+            this.cmbControlHead.TabIndex = 2;
             // 
             // label10
             // 
@@ -396,6 +455,14 @@
             this.label10.Size = new System.Drawing.Size(73, 13);
             this.label10.TabIndex = 1;
             this.label10.Text = "TTS Enabled:";
+            // 
+            // cmbTtsEnabled
+            // 
+            this.cmbTtsEnabled.FormattingEnabled = true;
+            this.cmbTtsEnabled.Location = new System.Drawing.Point(79, 22);
+            this.cmbTtsEnabled.Name = "cmbTtsEnabled";
+            this.cmbTtsEnabled.Size = new System.Drawing.Size(121, 21);
+            this.cmbTtsEnabled.TabIndex = 0;
             // 
             // cmbChannels
             // 
@@ -462,6 +529,40 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Channel";
             // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(73, 91);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(37, 13);
+            this.label14.TabIndex = 17;
+            this.label14.Text = "Mode:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(25, 65);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(85, 13);
+            this.label13.TabIndex = 16;
+            this.label13.Text = "Frequncy (MhZ):";
+            // 
+            // txtChannelFrequncy
+            // 
+            this.txtChannelFrequncy.Location = new System.Drawing.Point(120, 62);
+            this.txtChannelFrequncy.Name = "txtChannelFrequncy";
+            this.txtChannelFrequncy.Size = new System.Drawing.Size(117, 20);
+            this.txtChannelFrequncy.TabIndex = 15;
+            // 
+            // cmbChannelMode
+            // 
+            this.cmbChannelMode.FormattingEnabled = true;
+            this.cmbChannelMode.Location = new System.Drawing.Point(120, 88);
+            this.cmbChannelMode.Name = "cmbChannelMode";
+            this.cmbChannelMode.Size = new System.Drawing.Size(117, 21);
+            this.cmbChannelMode.TabIndex = 14;
+            this.cmbChannelMode.SelectedIndexChanged += new System.EventHandler(this.cmbChannelMode_SelectedIndexChanged);
+            // 
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.txtZoneName);
@@ -478,91 +579,120 @@
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Zone";
             // 
-            // cmbControlHead
+            // btnLoadSysKey
             // 
-            this.cmbControlHead.FormattingEnabled = true;
-            this.cmbControlHead.Location = new System.Drawing.Point(79, 48);
-            this.cmbControlHead.Name = "cmbControlHead";
-            this.cmbControlHead.Size = new System.Drawing.Size(121, 21);
-            this.cmbControlHead.TabIndex = 2;
+            this.btnLoadSysKey.Location = new System.Drawing.Point(654, 69);
+            this.btnLoadSysKey.Name = "btnLoadSysKey";
+            this.btnLoadSysKey.Size = new System.Drawing.Size(134, 23);
+            this.btnLoadSysKey.TabIndex = 29;
+            this.btnLoadSysKey.Text = "Load System Key";
+            this.btnLoadSysKey.UseVisualStyleBackColor = true;
+            this.btnLoadSysKey.Click += new System.EventHandler(this.btnLoadSysKey_Click);
             // 
-            // label11
+            // txtIsSyskeyPresent
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(15, 52);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(52, 13);
-            this.label11.TabIndex = 3;
-            this.label11.Text = "CH Type:";
+            this.txtIsSyskeyPresent.Enabled = false;
+            this.txtIsSyskeyPresent.Location = new System.Drawing.Point(741, 113);
+            this.txtIsSyskeyPresent.Name = "txtIsSyskeyPresent";
+            this.txtIsSyskeyPresent.Size = new System.Drawing.Size(56, 20);
+            this.txtIsSyskeyPresent.TabIndex = 30;
             // 
-            // cmbRadioMode
+            // label15
             // 
-            this.cmbRadioMode.FormattingEnabled = true;
-            this.cmbRadioMode.Location = new System.Drawing.Point(79, 75);
-            this.cmbRadioMode.Name = "cmbRadioMode";
-            this.cmbRadioMode.Size = new System.Drawing.Size(121, 21);
-            this.cmbRadioMode.TabIndex = 4;
-            this.cmbRadioMode.SelectedIndexChanged += new System.EventHandler(this.cmbRadioMode_SelectedIndexChanged);
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(648, 116);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(87, 13);
+            this.label15.TabIndex = 31;
+            this.label15.Text = "SysKey Present?";
             // 
-            // label12
+            // chkRequireSysKey
             // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(28, 78);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(37, 13);
-            this.label12.TabIndex = 5;
-            this.label12.Text = "Mode:";
+            this.chkRequireSysKey.AutoSize = true;
+            this.chkRequireSysKey.Location = new System.Drawing.Point(79, 151);
+            this.chkRequireSysKey.Name = "chkRequireSysKey";
+            this.chkRequireSysKey.Size = new System.Drawing.Size(107, 17);
+            this.chkRequireSysKey.TabIndex = 8;
+            this.chkRequireSysKey.Text = "Require SysKey?";
+            this.chkRequireSysKey.UseVisualStyleBackColor = true;
             // 
-            // chkSecondaryRadioTx
+            // txtHomeSysID
             // 
-            this.chkSecondaryRadioTx.AutoSize = true;
-            this.chkSecondaryRadioTx.Location = new System.Drawing.Point(69, 102);
-            this.chkSecondaryRadioTx.Name = "chkSecondaryRadioTx";
-            this.chkSecondaryRadioTx.Size = new System.Drawing.Size(125, 17);
-            this.chkSecondaryRadioTx.TabIndex = 6;
-            this.chkSecondaryRadioTx.Text = "Secondary Radio TX";
-            this.chkSecondaryRadioTx.UseVisualStyleBackColor = true;
-            this.chkSecondaryRadioTx.CheckedChanged += new System.EventHandler(this.chkSecondaryRadioTx_CheckedChanged);
+            this.txtHomeSysID.Location = new System.Drawing.Point(79, 125);
+            this.txtHomeSysID.Name = "txtHomeSysID";
+            this.txtHomeSysID.Size = new System.Drawing.Size(121, 20);
+            this.txtHomeSysID.TabIndex = 9;
             // 
-            // cmbChannelMode
+            // label16
             // 
-            this.cmbChannelMode.FormattingEnabled = true;
-            this.cmbChannelMode.Location = new System.Drawing.Point(120, 88);
-            this.cmbChannelMode.Name = "cmbChannelMode";
-            this.cmbChannelMode.Size = new System.Drawing.Size(117, 21);
-            this.cmbChannelMode.TabIndex = 14;
-            this.cmbChannelMode.SelectedIndexChanged += new System.EventHandler(this.cmbChannelMode_SelectedIndexChanged);
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(1, 129);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(72, 13);
+            this.label16.TabIndex = 10;
+            this.label16.Text = "Home Sys ID:";
             // 
-            // txtChannelFrequncy
+            // chkEnforceSysID
             // 
-            this.txtChannelFrequncy.Location = new System.Drawing.Point(120, 62);
-            this.txtChannelFrequncy.Name = "txtChannelFrequncy";
-            this.txtChannelFrequncy.Size = new System.Drawing.Size(117, 20);
-            this.txtChannelFrequncy.TabIndex = 15;
+            this.chkEnforceSysID.AutoSize = true;
+            this.chkEnforceSysID.Location = new System.Drawing.Point(79, 174);
+            this.chkEnforceSysID.Name = "chkEnforceSysID";
+            this.chkEnforceSysID.Size = new System.Drawing.Size(100, 17);
+            this.chkEnforceSysID.TabIndex = 11;
+            this.chkEnforceSysID.Text = "Enforce SysID?";
+            this.chkEnforceSysID.UseVisualStyleBackColor = true;
             // 
-            // label13
+            // txtBornSysID
             // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(25, 65);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(85, 13);
-            this.label13.TabIndex = 16;
-            this.label13.Text = "Frequncy (MhZ):";
+            this.txtBornSysID.Location = new System.Drawing.Point(91, 125);
+            this.txtBornSysID.Name = "txtBornSysID";
+            this.txtBornSysID.Size = new System.Drawing.Size(100, 20);
+            this.txtBornSysID.TabIndex = 32;
             // 
-            // label14
+            // label17
             // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(73, 91);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(37, 13);
-            this.label14.TabIndex = 17;
-            this.label14.Text = "Mode:";
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(9, 128);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(76, 13);
+            this.label17.TabIndex = 33;
+            this.label17.Text = "Original SysID:";
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.Location = new System.Drawing.Point(91, 151);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new System.Drawing.Size(100, 20);
+            this.txtPassword.TabIndex = 34;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(4, 154);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(81, 13);
+            this.label18.TabIndex = 35;
+            this.label18.Text = "CPG Password:";
+            // 
+            // chkCpgPassword
+            // 
+            this.chkCpgPassword.AutoSize = true;
+            this.chkCpgPassword.Location = new System.Drawing.Point(88, 174);
+            this.chkCpgPassword.Name = "chkCpgPassword";
+            this.chkCpgPassword.Size = new System.Drawing.Size(103, 17);
+            this.chkCpgPassword.TabIndex = 36;
+            this.chkCpgPassword.Text = "CPG Password?";
+            this.chkCpgPassword.UseVisualStyleBackColor = true;
+            this.chkCpgPassword.CheckedChanged += new System.EventHandler(this.chkCpgPassword_CheckedChanged);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.txtIsSyskeyPresent);
+            this.Controls.Add(this.btnLoadSysKey);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox5);
             this.Controls.Add(this.groupBox3);
@@ -584,6 +714,7 @@
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -638,6 +769,18 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.TextBox txtChannelFrequncy;
         private System.Windows.Forms.ComboBox cmbChannelMode;
+        private System.Windows.Forms.Button btnLoadSysKey;
+        private System.Windows.Forms.TextBox txtIsSyskeyPresent;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox txtHomeSysID;
+        private System.Windows.Forms.CheckBox chkRequireSysKey;
+        private System.Windows.Forms.CheckBox chkEnforceSysID;
+        private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.TextBox txtBornSysID;
+        private System.Windows.Forms.CheckBox chkCpgPassword;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.TextBox txtPassword;
     }
 }
 
