@@ -593,26 +593,22 @@ namespace TrunkScannerCPS
                 string alias = parts[0].Trim();
                 string identifier = parts[1].TrimEnd(')');
 
-                // Attempt to find the channel from zones
                 Channel channel = currentCodeplug.Zones
                     .SelectMany(z => z.Channels)
                     .FirstOrDefault(c => c.Alias == alias && (c.Tgid == identifier || FormatFrequency(c.Frequency) == identifier));
 
                 if (channel != null)
                 {
-                    // Creating a new item for the scan list
                     ScanListItem newItem = new ScanListItem
                     {
                         Alias = channel.Alias,
                         Tgid = channel.Tgid,
                         Frequency = channel.Frequency,
-                        Mode = channel.Mode // Ensuring the mode is correctly captured
+                        Mode = channel.Mode
                     };
 
-                    // Adding the new item to the scan list
                     scanList.Items.Add(newItem);
 
-                    // Updating the tree view
                     string displayText = $"{newItem.Alias} ({(string.IsNullOrEmpty(newItem.Tgid) ? FormatFrequency(newItem.Frequency) : newItem.Tgid)})";
                     TreeNode newNode = new TreeNode(displayText);
                     treeView1.SelectedNode.Nodes.Add(newNode);
@@ -623,7 +619,6 @@ namespace TrunkScannerCPS
                     MessageBox.Show("Channel not found.", "Error");
                 }
 
-                // Refreshing the channels combobox
                 PopulateChannelsComboBox(currentCodeplug.Zones.SelectMany(z => z.Channels).ToList(), scanList);
             }
             else
