@@ -590,28 +590,45 @@ namespace TrunkScannerCPS
             {
                 string selectedItem = cmbChannels.SelectedItem.ToString();
                 var parts = selectedItem.Split(new string[] { " (" }, StringSplitOptions.None);
-                string alias = parts[0];
+                string alias = parts[0].Trim();
                 string identifier = parts[1].TrimEnd(')');
 
-                bool isFrequency = identifier.All(char.IsDigit) && identifier.Length > 5;
+                // Attempt to find the channel from zones
+                Channel channel = currentCodeplug.Zones
+                    .SelectMany(z => z.Channels)
+                    .FirstOrDefault(c => c.Alias == alias && (c.Tgid == identifier || FormatFrequency(c.Frequency) == identifier));
 
-                ScanListItem newItem = new ScanListItem
+                if (channel != null)
                 {
-                    Alias = alias,
-                    Tgid = isFrequency ? "" : identifier,
-                    Frequency = isFrequency ? ParseFrequency(identifier) : ""
-                };
+                    // Creating a new item for the scan list
+                    ScanListItem newItem = new ScanListItem
+                    {
+                        Alias = channel.Alias,
+                        Tgid = channel.Tgid,
+                        Frequency = channel.Frequency,
+                        Mode = channel.Mode // Ensuring the mode is correctly captured
+                    };
 
-                scanList.Items.Add(newItem);
+                    // Adding the new item to the scan list
+                    scanList.Items.Add(newItem);
 
-                TreeNode newNode = new TreeNode($"{newItem.Alias} ({(isFrequency ? FormatFrequency(newItem.Frequency) : newItem.Tgid)})");
-                treeView1.SelectedNode.Nodes.Add(newNode);
+                    // Updating the tree view
+                    string displayText = $"{newItem.Alias} ({(string.IsNullOrEmpty(newItem.Tgid) ? FormatFrequency(newItem.Frequency) : newItem.Tgid)})";
+                    TreeNode newNode = new TreeNode(displayText);
+                    treeView1.SelectedNode.Nodes.Add(newNode);
+                    treeView1.SelectedNode.Expand();
+                }
+                else
+                {
+                    MessageBox.Show("Channel not found.", "Error");
+                }
 
+                // Refreshing the channels combobox
                 PopulateChannelsComboBox(currentCodeplug.Zones.SelectMany(z => z.Channels).ToList(), scanList);
             }
             else
             {
-                MessageBox.Show("Please select a channel to add.", "Error");
+                MessageBox.Show("Please select a scan list and a channel to add.", "Error");
             }
         }
 
