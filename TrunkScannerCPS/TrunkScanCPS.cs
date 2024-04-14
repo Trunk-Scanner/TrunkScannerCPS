@@ -13,7 +13,7 @@ namespace TrunkScannerCPS
     {
         private Codeplug currentCodeplug;
         private static string appVersion = "R01.12.00";
-        private AppType currentAppType = AppType.Labtool;
+        private AppType currentAppType = AppType.CPS;
         private bool isSysKeyPresent = false;
 
         public Form1()

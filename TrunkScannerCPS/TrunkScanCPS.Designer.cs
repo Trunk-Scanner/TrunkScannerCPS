@@ -89,11 +89,13 @@
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.chkCpgPassword = new System.Windows.Forms.CheckBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.groupBox5.SuspendLayout();
+            this.groupBox6.SuspendLayout();
             this.SuspendLayout();
             // 
             // treeView1
@@ -106,7 +108,7 @@
             // 
             // btnLoadCodeplug
             // 
-            this.btnLoadCodeplug.Location = new System.Drawing.Point(654, 9);
+            this.btnLoadCodeplug.Location = new System.Drawing.Point(699, 12);
             this.btnLoadCodeplug.Name = "btnLoadCodeplug";
             this.btnLoadCodeplug.Size = new System.Drawing.Size(134, 23);
             this.btnLoadCodeplug.TabIndex = 1;
@@ -116,14 +118,14 @@
             // 
             // txtChannelName
             // 
-            this.txtChannelName.Location = new System.Drawing.Point(120, 14);
+            this.txtChannelName.Location = new System.Drawing.Point(97, 18);
             this.txtChannelName.Name = "txtChannelName";
             this.txtChannelName.Size = new System.Drawing.Size(117, 20);
             this.txtChannelName.TabIndex = 2;
             // 
             // txtTgid
             // 
-            this.txtTgid.Location = new System.Drawing.Point(120, 36);
+            this.txtTgid.Location = new System.Drawing.Point(97, 40);
             this.txtTgid.Name = "txtTgid";
             this.txtTgid.Size = new System.Drawing.Size(117, 20);
             this.txtTgid.TabIndex = 3;
@@ -180,7 +182,7 @@
             // 
             // btnSaveCodeplug
             // 
-            this.btnSaveCodeplug.Location = new System.Drawing.Point(654, 40);
+            this.btnSaveCodeplug.Location = new System.Drawing.Point(699, 43);
             this.btnSaveCodeplug.Name = "btnSaveCodeplug";
             this.btnSaveCodeplug.Size = new System.Drawing.Size(134, 23);
             this.btnSaveCodeplug.TabIndex = 9;
@@ -208,7 +210,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(71, 22);
+            this.label1.Location = new System.Drawing.Point(48, 26);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(38, 13);
             this.label1.TabIndex = 12;
@@ -217,7 +219,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(73, 45);
+            this.label2.Location = new System.Drawing.Point(50, 49);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(36, 13);
             this.label2.TabIndex = 13;
@@ -234,9 +236,6 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.chkCpgPassword);
-            this.groupBox1.Controls.Add(this.label18);
-            this.groupBox1.Controls.Add(this.txtPassword);
             this.groupBox1.Controls.Add(this.label17);
             this.groupBox1.Controls.Add(this.txtBornSysID);
             this.groupBox1.Controls.Add(this.label7);
@@ -247,7 +246,7 @@
             this.groupBox1.Controls.Add(this.modelBox);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.serialNumberBox);
-            this.groupBox1.Location = new System.Drawing.Point(597, 237);
+            this.groupBox1.Location = new System.Drawing.Point(633, 237);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(200, 201);
             this.groupBox1.TabIndex = 15;
@@ -383,20 +382,19 @@
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.chkEnforceSysID);
-            this.groupBox2.Controls.Add(this.chkSecondaryRadioTx);
             this.groupBox2.Controls.Add(this.label16);
+            this.groupBox2.Controls.Add(this.txtPassword);
+            this.groupBox2.Controls.Add(this.label18);
             this.groupBox2.Controls.Add(this.label12);
             this.groupBox2.Controls.Add(this.txtHomeSysID);
-            this.groupBox2.Controls.Add(this.chkRequireSysKey);
             this.groupBox2.Controls.Add(this.cmbRadioMode);
             this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.cmbControlHead);
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.cmbTtsEnabled);
-            this.groupBox2.Location = new System.Drawing.Point(391, 237);
+            this.groupBox2.Location = new System.Drawing.Point(404, 237);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 201);
+            this.groupBox2.Size = new System.Drawing.Size(211, 201);
             this.groupBox2.TabIndex = 23;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Settings";
@@ -404,7 +402,7 @@
             // chkSecondaryRadioTx
             // 
             this.chkSecondaryRadioTx.AutoSize = true;
-            this.chkSecondaryRadioTx.Location = new System.Drawing.Point(75, 102);
+            this.chkSecondaryRadioTx.Location = new System.Drawing.Point(6, 19);
             this.chkSecondaryRadioTx.Name = "chkSecondaryRadioTx";
             this.chkSecondaryRadioTx.Size = new System.Drawing.Size(125, 17);
             this.chkSecondaryRadioTx.TabIndex = 6;
@@ -415,7 +413,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(28, 78);
+            this.label12.Location = new System.Drawing.Point(51, 79);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(37, 13);
             this.label12.TabIndex = 5;
@@ -424,16 +422,16 @@
             // cmbRadioMode
             // 
             this.cmbRadioMode.FormattingEnabled = true;
-            this.cmbRadioMode.Location = new System.Drawing.Point(79, 75);
+            this.cmbRadioMode.Location = new System.Drawing.Point(94, 75);
             this.cmbRadioMode.Name = "cmbRadioMode";
-            this.cmbRadioMode.Size = new System.Drawing.Size(121, 21);
+            this.cmbRadioMode.Size = new System.Drawing.Size(106, 21);
             this.cmbRadioMode.TabIndex = 4;
             this.cmbRadioMode.SelectedIndexChanged += new System.EventHandler(this.cmbRadioMode_SelectedIndexChanged);
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(15, 52);
+            this.label11.Location = new System.Drawing.Point(36, 52);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(52, 13);
             this.label11.TabIndex = 3;
@@ -442,15 +440,15 @@
             // cmbControlHead
             // 
             this.cmbControlHead.FormattingEnabled = true;
-            this.cmbControlHead.Location = new System.Drawing.Point(79, 48);
+            this.cmbControlHead.Location = new System.Drawing.Point(94, 48);
             this.cmbControlHead.Name = "cmbControlHead";
-            this.cmbControlHead.Size = new System.Drawing.Size(121, 21);
+            this.cmbControlHead.Size = new System.Drawing.Size(106, 21);
             this.cmbControlHead.TabIndex = 2;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(0, 25);
+            this.label10.Location = new System.Drawing.Point(15, 26);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(73, 13);
             this.label10.TabIndex = 1;
@@ -459,9 +457,9 @@
             // cmbTtsEnabled
             // 
             this.cmbTtsEnabled.FormattingEnabled = true;
-            this.cmbTtsEnabled.Location = new System.Drawing.Point(79, 22);
+            this.cmbTtsEnabled.Location = new System.Drawing.Point(94, 22);
             this.cmbTtsEnabled.Name = "cmbTtsEnabled";
-            this.cmbTtsEnabled.Size = new System.Drawing.Size(121, 21);
+            this.cmbTtsEnabled.Size = new System.Drawing.Size(106, 21);
             this.cmbTtsEnabled.TabIndex = 0;
             // 
             // cmbChannels
@@ -522,9 +520,9 @@
             this.groupBox4.Controls.Add(this.btnSaveChannel);
             this.groupBox4.Controls.Add(this.btnDeleteChannel);
             this.groupBox4.Controls.Add(this.btnAddChannel);
-            this.groupBox4.Location = new System.Drawing.Point(405, 12);
+            this.groupBox4.Location = new System.Drawing.Point(381, 12);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(243, 219);
+            this.groupBox4.Size = new System.Drawing.Size(234, 219);
             this.groupBox4.TabIndex = 28;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Channel";
@@ -532,7 +530,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(73, 91);
+            this.label14.Location = new System.Drawing.Point(50, 95);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(37, 13);
             this.label14.TabIndex = 17;
@@ -541,7 +539,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(25, 65);
+            this.label13.Location = new System.Drawing.Point(2, 69);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(85, 13);
             this.label13.TabIndex = 16;
@@ -549,7 +547,7 @@
             // 
             // txtChannelFrequncy
             // 
-            this.txtChannelFrequncy.Location = new System.Drawing.Point(120, 62);
+            this.txtChannelFrequncy.Location = new System.Drawing.Point(97, 66);
             this.txtChannelFrequncy.Name = "txtChannelFrequncy";
             this.txtChannelFrequncy.Size = new System.Drawing.Size(117, 20);
             this.txtChannelFrequncy.TabIndex = 15;
@@ -557,7 +555,7 @@
             // cmbChannelMode
             // 
             this.cmbChannelMode.FormattingEnabled = true;
-            this.cmbChannelMode.Location = new System.Drawing.Point(120, 88);
+            this.cmbChannelMode.Location = new System.Drawing.Point(97, 92);
             this.cmbChannelMode.Name = "cmbChannelMode";
             this.cmbChannelMode.Size = new System.Drawing.Size(117, 21);
             this.cmbChannelMode.TabIndex = 14;
@@ -574,14 +572,14 @@
             this.groupBox5.Controls.Add(this.cmbScanList);
             this.groupBox5.Location = new System.Drawing.Point(199, 12);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(200, 140);
+            this.groupBox5.Size = new System.Drawing.Size(186, 140);
             this.groupBox5.TabIndex = 28;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Zone";
             // 
             // btnLoadSysKey
             // 
-            this.btnLoadSysKey.Location = new System.Drawing.Point(654, 69);
+            this.btnLoadSysKey.Location = new System.Drawing.Point(699, 72);
             this.btnLoadSysKey.Name = "btnLoadSysKey";
             this.btnLoadSysKey.Size = new System.Drawing.Size(134, 23);
             this.btnLoadSysKey.TabIndex = 29;
@@ -592,7 +590,7 @@
             // txtIsSyskeyPresent
             // 
             this.txtIsSyskeyPresent.Enabled = false;
-            this.txtIsSyskeyPresent.Location = new System.Drawing.Point(741, 113);
+            this.txtIsSyskeyPresent.Location = new System.Drawing.Point(777, 103);
             this.txtIsSyskeyPresent.Name = "txtIsSyskeyPresent";
             this.txtIsSyskeyPresent.Size = new System.Drawing.Size(56, 20);
             this.txtIsSyskeyPresent.TabIndex = 30;
@@ -600,7 +598,7 @@
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(648, 116);
+            this.label15.Location = new System.Drawing.Point(685, 107);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(87, 13);
             this.label15.TabIndex = 31;
@@ -609,7 +607,7 @@
             // chkRequireSysKey
             // 
             this.chkRequireSysKey.AutoSize = true;
-            this.chkRequireSysKey.Location = new System.Drawing.Point(79, 151);
+            this.chkRequireSysKey.Location = new System.Drawing.Point(6, 65);
             this.chkRequireSysKey.Name = "chkRequireSysKey";
             this.chkRequireSysKey.Size = new System.Drawing.Size(107, 17);
             this.chkRequireSysKey.TabIndex = 8;
@@ -618,15 +616,15 @@
             // 
             // txtHomeSysID
             // 
-            this.txtHomeSysID.Location = new System.Drawing.Point(79, 125);
+            this.txtHomeSysID.Location = new System.Drawing.Point(94, 102);
             this.txtHomeSysID.Name = "txtHomeSysID";
-            this.txtHomeSysID.Size = new System.Drawing.Size(121, 20);
+            this.txtHomeSysID.Size = new System.Drawing.Size(106, 20);
             this.txtHomeSysID.TabIndex = 9;
             // 
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(1, 129);
+            this.label16.Location = new System.Drawing.Point(16, 105);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(72, 13);
             this.label16.TabIndex = 10;
@@ -635,7 +633,7 @@
             // chkEnforceSysID
             // 
             this.chkEnforceSysID.AutoSize = true;
-            this.chkEnforceSysID.Location = new System.Drawing.Point(79, 174);
+            this.chkEnforceSysID.Location = new System.Drawing.Point(6, 88);
             this.chkEnforceSysID.Name = "chkEnforceSysID";
             this.chkEnforceSysID.Size = new System.Drawing.Size(100, 17);
             this.chkEnforceSysID.TabIndex = 11;
@@ -660,15 +658,15 @@
             // 
             // txtPassword
             // 
-            this.txtPassword.Location = new System.Drawing.Point(91, 151);
+            this.txtPassword.Location = new System.Drawing.Point(94, 129);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(100, 20);
+            this.txtPassword.Size = new System.Drawing.Size(106, 20);
             this.txtPassword.TabIndex = 34;
             // 
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(4, 154);
+            this.label18.Location = new System.Drawing.Point(7, 132);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(81, 13);
             this.label18.TabIndex = 35;
@@ -677,7 +675,7 @@
             // chkCpgPassword
             // 
             this.chkCpgPassword.AutoSize = true;
-            this.chkCpgPassword.Location = new System.Drawing.Point(88, 174);
+            this.chkCpgPassword.Location = new System.Drawing.Point(6, 42);
             this.chkCpgPassword.Name = "chkCpgPassword";
             this.chkCpgPassword.Size = new System.Drawing.Size(103, 17);
             this.chkCpgPassword.TabIndex = 36;
@@ -685,11 +683,25 @@
             this.chkCpgPassword.UseVisualStyleBackColor = true;
             this.chkCpgPassword.CheckedChanged += new System.EventHandler(this.chkCpgPassword_CheckedChanged);
             // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.chkSecondaryRadioTx);
+            this.groupBox6.Controls.Add(this.chkEnforceSysID);
+            this.groupBox6.Controls.Add(this.chkCpgPassword);
+            this.groupBox6.Controls.Add(this.chkRequireSysKey);
+            this.groupBox6.Location = new System.Drawing.Point(633, 126);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(200, 105);
+            this.groupBox6.TabIndex = 32;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Options";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(845, 450);
+            this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.txtIsSyskeyPresent);
             this.Controls.Add(this.btnLoadSysKey);
@@ -713,6 +725,8 @@
             this.groupBox4.PerformLayout();
             this.groupBox5.ResumeLayout(false);
             this.groupBox5.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.groupBox6.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -781,6 +795,7 @@
         private System.Windows.Forms.CheckBox chkCpgPassword;
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.GroupBox groupBox6;
     }
 }
 
